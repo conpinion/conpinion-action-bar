@@ -1,0 +1,37 @@
+<!-- build:process -->
+<!--
+<%= copyright %>
+Element: <%= pkg.name %>
+Version: <%= pkg.version %>
+Description: <%= pkg.description %>
+-->
+<!-- /build -->
+
+<link rel="import" href="../lib/iron-icon/iron-icon.html">
+<link rel="import" href="../lib/iron-icons/iron-icons.html">
+<link rel="import" href="../lib/paper-icon-button/paper-icon-button.html"/>
+
+<dom-module id="conpinion-action-bar-action">
+
+  <!-- build:script inline conpinion-action-bar-action -->
+  <script src="conpinion-action-bar-action.js"></script>
+  <!-- /build -->
+
+</dom-module>
+
+<dom-module id="conpinion-action-bar">
+
+  <template>
+    <template is="dom-if" if="[[render]]">
+      <template is="dom-repeat" items="[[actions]]">
+        <paper-icon-button icon="[[item.icon]]" on-tap="action">[[item.innerText]]</paper-icon-button>
+      </template>
+    </template>
+  </template>
+
+  <!-- build:script inline conpinion-action-bar -->
+  <script src="conpinion-action-bar.js"></script>
+  <!-- /build -->
+
+</dom-module>
+
