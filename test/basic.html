@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>conpinion-action-bar basic tests</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <script src="../lib/webcomponentsjs/webcomponents.js"></script>
+  <script src="../lib/web-component-tester/browser.js"></script>
+  <script src="../lib/test-fixture/test-fixture-mocha.js"></script>
+  <script src="../lib/coffee-script/extras/coffee-script.js"></script>
+  <link rel="import" href="../lib/test-fixture/test-fixture.html">
+  <link rel="import" href="../build/conpinion-action-bar.html">
+</head>
+
+<body>
+
+  <test-fixture id="element">
+    <template>
+      <div>
+        <conpinion-action-bar render id="render1"></conpinion-action-bar>
+        <conpinion-action-bar render id="render2"></conpinion-action-bar>
+        <conpinion-action-bar>
+          <conpinion-action-bar-action icon="mail"></conpinion-action-bar-action>
+        </conpinion-action-bar>
+      </div>
+    </template>
+  </test-fixture>
+
+  <script type="text/coffeescript">
+
+    element = null
+
+    describe 'rendering', ->
+
+      beforeEach -> element = fixture 'element'
+
+      it 'should render the actions in each render instance', (done) ->
+        flush ->
+          expect(element.querySelector('#render1 paper-icon-button').icon).to.equal 'mail'
+          expect(element.querySelector('#render2 paper-icon-button').icon).to.equal 'mail'
+          done()
+
+  </script>
+
+</body>
+
+</html>

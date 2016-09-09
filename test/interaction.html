@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>conpinion-example-element interaction tests</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <script src="../lib/webcomponentsjs/webcomponents.js"></script>
+  <script src="../lib/web-component-tester/browser.js"></script>
+  <script src="../lib/coffee-script/extras/coffee-script.js"></script>
+  <script src="../lib/test-fixture/test-fixture-mocha.js"></script>
+  <script src="../lib/jquery/dist/jquery.js"></script>
+  <link rel="import" href="../lib/test-fixture/test-fixture.html">
+  <link rel="import" href="../build/conpinion-action-bar.html">
+</head>
+
+<body>
+
+  <test-fixture id="actionWithMethod">
+    <template>
+      <div>
+        <conpinion-action-bar render id="bar"></conpinion-action-bar>
+        <conpinion-action-bar>
+          <conpinion-action-bar-action method="handler"></conpinion-action-bar-action>
+        </conpinion-action-bar>
+      </div>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="actionWithRoute">
+    <template>
+      <div>
+        <conpinion-action-bar render id="bar"></conpinion-action-bar>
+        <conpinion-action-bar id>
+          <conpinion-action-bar-action route="/path"></conpinion-action-bar-action>
+        </conpinion-action-bar>
+      </div>
+    </template>
+  </test-fixture>
+
+  <script type="text/coffeescript">
+
+    element = null
+
+    describe 'when an action with a method handler is clicked', ->
+
+      beforeEach -> element = fixture 'actionWithMethod'
+
+      it 'should call the handler method', (done) ->
+        flush ->
+          button = element.querySelector '#bar paper-icon-button'
+          bar = element.querySelector '#bar'
+          handler = sinon.spy()
+          bar.controller = { handler: handler}
+          $(button).trigger 'click'
+          sinon.assert.calledOn handler, bar.controller
+          done()
+
+    describe 'when an action with a route is clicked', ->
+
+      beforeEach -> element = fixture 'actionWithRoute'
+
+      it 'should route to the action path', (done) ->
+        flush ->
+          bar = element.querySelector '#bar'
+          button = bar.querySelector 'paper-icon-button'
+          bar.router = {go: sinon.spy()}
+          $(button).trigger 'click'
+          sinon.assert.calledWith bar.router.go, '/path'
+          done()
+
+  </script>
+
+</body>
+
+</html>
